@@ -1,8 +1,9 @@
 <nav id="sidebar" class="d-flex flex-column p-3 bg-dark text-white">
   <div class="sidebar-header d-flex align-items-center mb-3">
-    <a [routerLink]="['/']" class="text-white text-decoration-none d-flex align-items-center"><!-- [routerLink]="['/']" -->
+    <a [routerLink]="['/']"
+      class="text-white text-decoration-none d-flex align-items-center"><!-- [routerLink]="['/']" -->
       <i class="bi bi-grid fs-5"></i>
-      <span>Dashboard</span>
+      <span>School Name</span>
     </a>
   </div>
 
@@ -11,13 +12,25 @@
   <ul class="nav nav-pills flex-column mb-auto">
     <li class="nav-item">
       <!-- <a class="nav-link d-flex align-items-center text-white" [routerLink]="['/store-locations']" -->
-       <a class="nav-link d-flex align-items-center text-white"
-        routerLinkActive="active">
+      <a class="nav-link d-flex align-items-center text-white" [routerLink]="['/']"  routerLinkActive="active">
+        <i class="bi bi-file-earmark"></i>
+        <span>Dashboard</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <!-- <a class="nav-link d-flex align-items-center text-white" [routerLink]="['/store-locations']" -->
+      <a class="nav-link d-flex align-items-center text-white" [routerLink]="['/fee-management']" routerLinkActive="active">
         <i class="bi bi-shop fs-5"></i>
         <span>Fee Management</span>
       </a>
     </li>
-    
+    <li class="nav-item">
+      <a class="nav-link d-flex align-items-center text-white" routerLinkActive="active" [routerLink]="['/student-management']">
+        <!-- <i class="bi bi-shop fs-5"></i> -->
+       <i class="bi bi-person-bounding-box"></i>
+        <span>Student Management</span>
+      </a>
+    </li>
 
   </ul>
 

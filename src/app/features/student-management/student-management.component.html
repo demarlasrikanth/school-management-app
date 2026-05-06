@@ -1,0 +1,213 @@
+<div class="container p-4">
+
+    <!-- 1. HEADER SELECTION -->
+    <mat-card class="mb-4">
+        <mat-card-content class="d-flex align-items-center gap-3">
+            <form [formGroup]="selectionForm" class="d-flex gap-3 flex-grow-1">
+                <mat-form-field appearance="outline">
+                    <mat-label>Class</mat-label>
+                    <mat-select formControlName="class">
+                        <mat-option *ngFor="let c of classList" [value]="c">{{c}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Section</mat-label>
+                    <mat-select formControlName="section">
+                        <mat-option *ngFor="let s of sections" [value]="s">{{s}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </form>
+
+            <button mat-raised-button color="primary" [disabled]="selectionForm.invalid" (click)="onAddStudentClick()">
+                <mat-icon>person_add</mat-icon> Add Student
+            </button>
+        </mat-card-content>
+    </mat-card>
+
+    <!-- 2. THE WIZARD (Only shows when Add Student is clicked) -->
+    <mat-card *ngIf="showWizard">
+        <mat-horizontal-stepper [linear]="true" #stepper>
+
+            <mat-step [stepControl]="basicInfoForm">
+                <form [formGroup]="basicInfoForm">
+                    <ng-template matStepLabel>Basic Info</ng-template>
+                    <div class="row mt-3">
+                        <mat-form-field appearance="outline" class="col-md-4">
+                            <mat-label>First Name</mat-label>
+                            <input matInput formControlName="firstName" required>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="col-md-4">
+                            <mat-label>Middle Name</mat-label>
+                            <input matInput formControlName="middleName">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="col-md-4">
+                            <mat-label>Last Name</mat-label>
+                            <input matInput formControlName="lastName" required>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="row">
+                        <mat-form-field appearance="outline" class="col-md-4">
+                            <mat-label>Date of Birth</mat-label>
+                            <input matInput [matDatepicker]="dobPicker" formControlName="dob">
+                            <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
+                            <mat-datepicker #dobPicker></mat-datepicker>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-md-4">
+                            <mat-label>Gender</mat-label>
+                            <mat-select formControlName="gender">
+                                <mat-option *ngFor="let g of genders" [value]="g">{{g}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-md-4">
+                            <mat-label>Age</mat-label>
+                            <input matInput formControlName="age" required>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                        <button mat-raised-button color="primary" matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+
+            <mat-step [stepControl]="academicMappingForm">
+                <form [formGroup]="academicMappingForm">
+                    <ng-template matStepLabel>Academic Fee</ng-template>
+                    <div class="row mt-3">
+                        <mat-form-field appearance="outline" class="col-md-6">
+                            <mat-label>Total Fee</mat-label>
+                            <input matInput readonly formControlName="totalFee">
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field appearance="outline" class="col-md-6">
+                            <mat-label>Registration/Admission Fee</mat-label>
+                            <input matInput formControlName="admissionfee">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="col-md-6">
+                            <mat-label>Tuition Fee</mat-label>
+                            <input matInput formControlName="tuitionFee">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="col-md-6">
+                            <mat-label>Facility/Development Fee</mat-label>
+                            <input matInput formControlName="developmentfee">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="col-md-6">
+                            <mat-label>Transport Fees</mat-label>
+                            <input matInput formControlName="transportfee">
+                        </mat-form-field>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-raised-button color="primary" matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+
+            <mat-step [stepControl]="guardianDetailsForm">
+                <form [formGroup]="guardianDetailsForm">
+                    <ng-template matStepLabel>Guardian & Contact</ng-template>
+                    <div class="row mt-3">
+                        <mat-form-field appearance="outline" class="col-md-6">
+                            <mat-label>Primary Guardian Name</mat-label>
+                            <input matInput formControlName="guardianName">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="col-md-6">
+                            <mat-label>Relationship</mat-label>
+                            <input matInput formControlName="relationship" placeholder="e.g. Father">
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field appearance="outline" class="col-md-6">
+                            <mat-label>Phone Number</mat-label>
+                            <input matInput formControlName="phone" placeholder="(000) 000-0000">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="col-md-6">
+                            <mat-label>Email Address</mat-label>
+                            <input matInput formControlName="email">
+                        </mat-form-field>
+                    </div>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Home Address</mat-label>
+                        <textarea matInput formControlName="address"></textarea>
+                    </mat-form-field>
+                    <div class="d-flex justify-content-between">
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-raised-button color="primary" matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+
+            <mat-step>
+                <ng-template matStepLabel>Documents</ng-template>
+                <div class="document-upload-list mt-3">
+                    <div class="upload-item mb-3 d-flex align-items-center justify-content-between p-2 border rounded">
+                        <span>Profile Picture</span>
+                        <input type="file" (change)="onFileChange($event, 'profilePic')">
+                    </div>
+                    <div class="upload-item mb-3 d-flex align-items-center justify-content-between p-2 border rounded">
+                        <span>Birth Certificate / ID</span>
+                        <input type="file" (change)="onFileChange($event, 'birthCertificate')">
+                    </div>
+                    <div class="upload-item mb-3 d-flex align-items-center justify-content-between p-2 border rounded">
+                        <span>Transfer Certificate (TC)</span>
+                        <input type="file" (change)="onFileChange($event, 'transferCertificate')">
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-raised-button color="accent" (click)="submitWizard()">Complete Registration</button>
+                </div>
+            </mat-step>
+
+        </mat-horizontal-stepper>
+    </mat-card>
+
+    <!-- 3. PLACEHOLDER FOR STUDENT LIST -->
+    <div *ngIf="selectionForm.valid && !showWizard" class="mt-4 border-top pt-4">
+        <h3>Existing Students in {{selectionForm.value.class}} - Section {{selectionForm.value.section}}</h3>
+        <div class="p-5 text-center text-muted border rounded bg-light">
+            <div class="mat-elevation-z8">
+                <table mat-table [dataSource]="dataSource">
+
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="position">
+                        <th mat-header-cell *matHeaderCellDef> No. </th>
+                        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef> Name </th>
+                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="weight">
+                        <th mat-header-cell *matHeaderCellDef> Weight </th>
+                        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                    </ng-container>
+
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="symbol">
+                        <th mat-header-cell *matHeaderCellDef> Symbol </th>
+                        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                    aria-label="Select page of periodic elements">
+                </mat-paginator>
+            </div>
+        </div>
+    </div>
+
+</div>
