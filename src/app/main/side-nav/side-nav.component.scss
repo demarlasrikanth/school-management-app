@@ -1,0 +1,104 @@
+#sidebar {
+  background: linear-gradient(180deg, #0b1b47 0%, #0051ff 100%);
+  min-width: 70px;
+  width: 70px; /* collapsed width */
+  min-height: 100vh;
+  transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1); /* smoother + slower */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  color: #fff;
+  padding-top: 10px;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.15);
+
+  /* Expand when hovered */
+  &:hover {
+    width: 250px;
+  }
+
+  hr {
+    border-color: rgba(255, 255, 255, 0.2);
+    margin: 0.5rem 0;
+    transition: opacity 0.4s ease;
+  }
+
+  /* Sidebar header (logo/title) */
+  .sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px 15px;
+    overflow: hidden;
+
+    i {
+      font-size: 20px;
+      margin-right: 8px;
+      flex-shrink: 0;
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    span {
+      opacity: 0;
+      visibility: hidden;
+      white-space: nowrap;
+      transform: translateX(-10px);
+      transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+  }
+
+  /* Nav links */
+  .nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: background 0.3s ease, padding-left 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+
+    i {
+      min-width: 24px;
+      text-align: left;
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    span {
+      opacity: 0;
+      visibility: hidden;
+      margin-left: 10px;
+      transform: translateX(-10px);
+      transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+      border-radius: 5px;
+    }
+  }
+
+  /* Show labels + animate icons slightly when expanded */
+  &:hover {
+    .sidebar-header i,
+    .nav-link i {
+      transform: translateX(0);
+    }
+
+    .sidebar-header span,
+    .nav-link span {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+      transition-delay: 0.1s; /* gentle delay after width expands */
+    }
+  }
+
+  /* Logout pinned to bottom */
+  a.nav-link:last-child {
+    margin-top: auto;
+  }
+}

@@ -1,0 +1,19 @@
+/* Main Wrapper: Use flexbox to create the layout */
+.main-wrapper {
+  display: flex;
+  height: 100vh;
+}
+
+
+/* Main content area */
+.main-content {
+  flex-grow: 1; /* Takes the remaining space */
+  padding: 20px;
+  overflow-y: auto;
+  transition: all 0.3s ease-in-out; 
+}
+
+.stick-main-contentt {
+  height: 100%;
+}
+
