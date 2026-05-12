@@ -19,6 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import { studentdata } from '../../data/demodata/studentdata';
 @Component({
   selector: 'app-student-management',
   imports: [
@@ -64,6 +65,8 @@ export class StudentManagementComponent implements OnInit {
 
   ngOnInit() {
     this.initializeForms();
+    const data =studentdata
+    this.dataSource=new MatTableDataSource<any>(data);
   }
   private initializeForms() {
     // Phase 1: Filter Selection
