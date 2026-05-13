@@ -1,52 +1,50 @@
-<nav id="sidebar" class="d-flex flex-column p-3 bg-dark text-white">
-  <div class="sidebar-header d-flex align-items-center mb-3">
-    <a [routerLink]="['/']"
-      class="text-white text-decoration-none d-flex align-items-center"><!-- [routerLink]="['/']" -->
-      <i class="bi bi-grid fs-5"></i>
-      <span>School Name</span>
-    </a>
+<nav class="sidebar">
+
+  <div class="sidebar-brand">
+    <mat-icon>grid_view</mat-icon>
+    <span>School Name</span>
   </div>
 
-  <hr>
+  <div class="sidebar-divider"></div>
 
-  <ul class="nav nav-pills flex-column mb-auto">
-    <li class="nav-item">
-      <!-- <a class="nav-link d-flex align-items-center text-white" [routerLink]="['/store-locations']" -->
-      <a class="nav-link d-flex align-items-center text-white" [routerLink]="['/']" routerLinkActive="active">
-        <i class="bi bi-file-earmark"></i>
-        <span>Dashboard</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <!-- <a class="nav-link d-flex align-items-center text-white" [routerLink]="['/store-locations']" -->
-      <a class="nav-link d-flex align-items-center text-white" [routerLink]="['/fee-management']"
-        routerLinkActive="active">
-        <i class="bi bi-shop fs-5"></i>
-        <span>Fee Management</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link d-flex align-items-center text-white" routerLinkActive="active"
-        [routerLink]="['/student-management']">
-        <!-- <i class="bi bi-shop fs-5"></i> -->
-        <i class="bi bi-person-bounding-box"></i>
-        <span>Student Management</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link d-flex align-items-center text-white" routerLinkActive="active"
-        [routerLink]="['/student-management']">
-        <!-- <i class="bi bi-shop fs-5"></i> -->
-        <i class="bi bi-shop fs-5"></i>
-        <span>Acadamic Structure</span>
-      </a>
-    </li>
-  </ul>
+  <div class="nav-body">
+    <div *ngFor="let section of sections" class="nav-section">
 
-  <hr>
+      <div class="section-header" (click)="toggleSection(section)">
+        <div class="section-header-left">
+          <mat-icon>{{ section.icon }}</mat-icon>
+          <span class="section-label">{{ section.section }}</span>
+        </div>
+        <mat-icon class="chevron" [class.rotated]="section.isOpen">expand_more</mat-icon>
+      </div>
 
-  <a class="nav-link d-flex align-items-center text-white" (click)="logout()">
-    <i class="bi bi-box-arrow-right fs-5"></i>
+      <div class="section-items" [class.open]="section.isOpen">
+        <div
+          *ngFor="let item of section.items"
+          class="nav-item"
+          [routerLink]="item.route"
+          routerLinkActive="nav-item--active"
+        >
+          <mat-icon>{{ item.icon }}</mat-icon>
+          <span>{{ item.name }}</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="sidebar-spacer"></div>
+
+  <div class="sidebar-divider"></div>
+
+  <div class="role-badge">
+    <mat-icon>manage_accounts</mat-icon>
+    <span>{{ roleName }}</span>
+  </div>
+
+  <div class="nav-item logout" (click)="logout()">
+    <mat-icon>logout</mat-icon>
     <span>Logout</span>
-  </a>
+  </div>
+
 </nav>
