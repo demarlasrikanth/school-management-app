@@ -1,213 +1,164 @@
-<div class="container p-4">
+<div class="container-fluid bg-light min-vh-100 p-4">
 
-    <!-- 1. HEADER SELECTION -->
-    <mat-card class="mb-4">
-        <mat-card-content class="d-flex align-items-center gap-3">
-            <form [formGroup]="selectionForm" class="d-flex gap-3 flex-grow-1">
-                <mat-form-field appearance="outline">
-                    <mat-label>Class</mat-label>
-                    <mat-select formControlName="class">
-                        <mat-option *ngFor="let c of classList" [value]="c">{{c}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-
-                <mat-form-field appearance="outline">
-                    <mat-label>Section</mat-label>
-                    <mat-select formControlName="section">
-                        <mat-option *ngFor="let s of sections" [value]="s">{{s}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </form>
-
-            <button mat-raised-button color="primary" [disabled]="selectionForm.invalid" (click)="onAddStudentClick()">
-                <mat-icon>person_add</mat-icon> Add Student
+    <div class="row align-items-center mb-4 g-3">
+        <div class="col-md-8">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-1">
+                    <li class="breadcrumb-item text-muted">Dashboard</li>
+                    <li class="breadcrumb-item active text-dark fw-medium">Students</li>
+                </ol>
+            </nav>
+            <h2 class="fw-bold text-dark mb-1">Student Directory</h2>
+            <p class="text-muted small mb-0">Manage academic records and enrollment status for all active students.</p>
+        </div>
+        <div class="col-md-4 text-md-end">
+            <button class="btn btn-primary px-4 py-2 fw-semibold d-inline-flex align-items-center gap-2">
+                <i class="bi bi-person-plus-fill"></i> Add New Student
             </button>
-        </mat-card-content>
-    </mat-card>
+        </div>
+    </div>
 
-    <!-- 2. THE WIZARD (Only shows when Add Student is clicked) -->
-    <mat-card *ngIf="showWizard">
-        <mat-horizontal-stepper [linear]="true" #stepper>
-
-            <mat-step [stepControl]="basicInfoForm">
-                <form [formGroup]="basicInfoForm">
-                    <ng-template matStepLabel>Basic Info</ng-template>
-                    <div class="row mt-3">
-                        <mat-form-field appearance="outline" class="col-md-4">
-                            <mat-label>First Name</mat-label>
-                            <input matInput formControlName="firstName" required>
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" class="col-md-4">
-                            <mat-label>Middle Name</mat-label>
-                            <input matInput formControlName="middleName">
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" class="col-md-4">
-                            <mat-label>Last Name</mat-label>
-                            <input matInput formControlName="lastName" required>
-                        </mat-form-field>
-                    </div>
-
-                    <div class="row">
-                        <mat-form-field appearance="outline" class="col-md-4">
-                            <mat-label>Date of Birth</mat-label>
-                            <input matInput [matDatepicker]="dobPicker" formControlName="dob">
-                            <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
-                            <mat-datepicker #dobPicker></mat-datepicker>
-                        </mat-form-field>
-
-                        <mat-form-field appearance="outline" class="col-md-4">
-                            <mat-label>Gender</mat-label>
-                            <mat-select formControlName="gender">
-                                <mat-option *ngFor="let g of genders" [value]="g">{{g}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-
-                        <mat-form-field appearance="outline" class="col-md-4">
-                            <mat-label>Age</mat-label>
-                            <input matInput formControlName="age" required>
-                        </mat-form-field>
-                    </div>
-
-                    <div class="d-flex justify-content-end">
-                        <button mat-raised-button color="primary" matStepperNext>Next</button>
-                    </div>
-                </form>
-            </mat-step>
-
-            <mat-step [stepControl]="academicMappingForm">
-                <form [formGroup]="academicMappingForm">
-                    <ng-template matStepLabel>Academic Fee</ng-template>
-                    <div class="row mt-3">
-                        <mat-form-field appearance="outline" class="col-md-6">
-                            <mat-label>Total Fee</mat-label>
-                            <input matInput readonly formControlName="totalFee">
-                        </mat-form-field>
-                    </div>
-                    <div class="row">
-                        <mat-form-field appearance="outline" class="col-md-6">
-                            <mat-label>Registration/Admission Fee</mat-label>
-                            <input matInput formControlName="admissionfee">
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" class="col-md-6">
-                            <mat-label>Tuition Fee</mat-label>
-                            <input matInput formControlName="tuitionFee">
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" class="col-md-6">
-                            <mat-label>Facility/Development Fee</mat-label>
-                            <input matInput formControlName="developmentfee">
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" class="col-md-6">
-                            <mat-label>Transport Fees</mat-label>
-                            <input matInput formControlName="transportfee">
-                        </mat-form-field>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <button mat-button matStepperPrevious>Back</button>
-                        <button mat-raised-button color="primary" matStepperNext>Next</button>
-                    </div>
-                </form>
-            </mat-step>
-
-            <mat-step [stepControl]="guardianDetailsForm">
-                <form [formGroup]="guardianDetailsForm">
-                    <ng-template matStepLabel>Guardian & Contact</ng-template>
-                    <div class="row mt-3">
-                        <mat-form-field appearance="outline" class="col-md-6">
-                            <mat-label>Primary Guardian Name</mat-label>
-                            <input matInput formControlName="guardianName">
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" class="col-md-6">
-                            <mat-label>Relationship</mat-label>
-                            <input matInput formControlName="relationship" placeholder="e.g. Father">
-                        </mat-form-field>
-                    </div>
-                    <div class="row">
-                        <mat-form-field appearance="outline" class="col-md-6">
-                            <mat-label>Phone Number</mat-label>
-                            <input matInput formControlName="phone" placeholder="(000) 000-0000">
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" class="col-md-6">
-                            <mat-label>Email Address</mat-label>
-                            <input matInput formControlName="email">
-                        </mat-form-field>
-                    </div>
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Home Address</mat-label>
-                        <textarea matInput formControlName="address"></textarea>
-                    </mat-form-field>
-                    <div class="d-flex justify-content-between">
-                        <button mat-button matStepperPrevious>Back</button>
-                        <button mat-raised-button color="primary" matStepperNext>Next</button>
-                    </div>
-                </form>
-            </mat-step>
-
-            <mat-step>
-                <ng-template matStepLabel>Documents</ng-template>
-                <div class="document-upload-list mt-3">
-                    <div class="upload-item mb-3 d-flex align-items-center justify-content-between p-2 border rounded">
-                        <span>Profile Picture</span>
-                        <input type="file" (change)="onFileChange($event, 'profilePic')">
-                    </div>
-                    <div class="upload-item mb-3 d-flex align-items-center justify-content-between p-2 border rounded">
-                        <span>Birth Certificate / ID</span>
-                        <input type="file" (change)="onFileChange($event, 'birthCertificate')">
-                    </div>
-                    <div class="upload-item mb-3 d-flex align-items-center justify-content-between p-2 border rounded">
-                        <span>Transfer Certificate (TC)</span>
-                        <input type="file" (change)="onFileChange($event, 'transferCertificate')">
+    <div class="card border-0 shadow-sm rounded-top-4 border-bottom">
+        <div class="card-body p-4">
+            <div class="row g-3 align-items-end">
+                <div class="col-lg-4 col-md-6">
+                    <label class="form-label small fw-bold text-secondary text-uppercase">Search List</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0 text-muted"><i
+                                class="bi bi-filter-left"></i></span>
+                        <input type="text" class="form-control border-start-0" placeholder="ID or Student Name...">
                     </div>
                 </div>
-
-                <div class="d-flex justify-content-between mt-4">
-                    <button mat-button matStepperPrevious>Back</button>
-                    <button mat-raised-button color="accent" (click)="submitWizard()">Complete Registration</button>
+                <div class="col-lg-2 col-md-3">
+                    <label class="form-label small fw-bold text-secondary text-uppercase">Grade Level</label>
+                    <select class="form-select">
+                        <option selected>All Grades</option>
+                    </select>
                 </div>
-            </mat-step>
-
-        </mat-horizontal-stepper>
-    </mat-card>
-
-    <!-- 3. PLACEHOLDER FOR STUDENT LIST -->
-    <div *ngIf="selectionForm.valid && !showWizard" class="mt-4 border-top pt-4">
-        <h3>Existing Students in {{selectionForm.value.class}} - Section {{selectionForm.value.section}}</h3>
-        <div class="p-5 text-center text-muted border rounded bg-light">
-            <div class="mat-elevation-z8">
-                <table mat-table [dataSource]="dataSource">
-
-                    <!-- Position Column -->
-                    <ng-container matColumnDef="position">
-                        <th mat-header-cell *matHeaderCellDef> Rool No. </th>
-                        <td mat-cell *matCellDef="let element"> {{element.basicInfo.rollNumber}} </td>
-                    </ng-container>
-
-                    <!-- Name Column -->
-                    <ng-container matColumnDef="name">
-                        <th mat-header-cell *matHeaderCellDef> Name </th>
-                        <td mat-cell *matCellDef="let element"> {{element.basicInfo.firstName}} {{element.basicInfo.lastName}}  </td>
-                    </ng-container>
-
-                    <!-- Weight Column -->
-                    <ng-container matColumnDef="weight">
-                        <th mat-header-cell *matHeaderCellDef> Parent Name </th>
-                        <td mat-cell *matCellDef="let element"> {{element.guardianDetails.guardianName}} </td>
-                    </ng-container>
-
-                    <!-- Symbol Column -->
-                    <ng-container matColumnDef="symbol">
-                        <th mat-header-cell *matHeaderCellDef> age </th>
-                        <td mat-cell *matCellDef="let element"> {{element.basicInfo.age}} </td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table>
-
-                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
-                    aria-label="Select page of periodic elements">
-                </mat-paginator>
+                <div class="col-lg-3 col-md-3">
+                    <label class="form-label small fw-bold text-secondary text-uppercase">Department</label>
+                    <select class="form-select">
+                        <option selected>All Departments</option>
+                    </select>
+                </div>
+                <div class="col-lg-3 col-md-12 text-lg-start">
+                    <button class="btn btn-link text-decoration-none fw-medium d-inline-flex align-items-center gap-1">
+                        <i class="bi bi-arrow-clockwise"></i> Clear Filters
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
+    <div class="card border-0 shadow-sm rounded-0">
+        <div class="table-responsive">
+            <table class="table align-middle mb-0">
+                <thead class="table-light-blue">
+                    <tr>
+                        <th class="ps-4 py-3 text-secondary small fw-bold uppercase">STUDENT ID</th>
+                        <th class="py-3 text-secondary small fw-bold uppercase">NAME</th>
+                        <th class="py-3 text-secondary small fw-bold uppercase">GRADE</th>
+                        <th class="py-3 text-secondary small fw-bold uppercase">DEPARTMENT</th>
+                        <th class="py-3 text-secondary small fw-bold uppercase text-center">STATUS</th>
+                        <th class="pe-4 py-3 text-secondary small fw-bold uppercase text-center">ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let student of students">
+                        <td class="ps-4 fw-bold text-primary small">{{ student.id }}</td>
+                        <td>
+                            <div class="d-flex align-items-center py-2">
+                                <div class="avatar me-3 d-flex align-items-center justify-content-center rounded-circle text-white fw-bold small"
+                                    [style.backgroundColor]="student.color">
+                                    {{ student.initials }}
+                                </div>
+                                <div>
+                                    <div class="fw-bold text-dark">{{ student.name }}</div>
+                                    <div class="text-muted extra-small">{{ student.email }}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-secondary small">{{ student.grade }}</td>
+                        <td class="text-secondary small">{{ student.department }}</td>
+                        <td class="text-center">
+                            <span [ngClass]="getStatusBadgeClass(student.status)">
+                                {{ student.status }}
+                            </span>
+                        </td>
+                        <td class="pe-4 text-center">
+                            <div class="d-flex justify-content-center gap-1">
+                                <button class="btn btn-sm text-secondary"><i class="bi bi-eye"></i></button>
+                                <button class="btn btn-sm text-secondary" data-bs-toggle="modal"
+                                    data-bs-target="#editModal" (click)="selectStudent(student)"><i
+                                        class="bi bi-pencil"></i></button>
+                                <button class="btn btn-sm text-secondary"><i class="bi bi-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-bottom-4 table-footer">
+        <div class="card-body d-flex flex-wrap justify-content-between align-items-center py-3">
+            <span class="text-muted small">Showing 1 to 5 of 1,240 entries</span>
+            <nav>
+                <ul class="pagination pagination-sm mb-0">
+                    <li class="page-item disabled"><a class="page-link" href="#"><i class="bi bi-chevron-left"></i></a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#"><i class="bi bi-chevron-right"></i></a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title fw-bold">Edit Student Record</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4" *ngIf="selectedStudent">
+                <form #editForm="ngForm">
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold text-muted uppercase">Full Name</label>
+                        <input type="text" class="form-control" name="name" [(ngModel)]="selectedStudent.name">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label small fw-bold text-muted uppercase">Grade Level</label>
+                            <select class="form-select" name="grade" [(ngModel)]="selectedStudent.grade">
+                                <option>Freshman</option>
+                                <option>Sophomore</option>
+                                <option>Junior</option>
+                                <option>Senior</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label small fw-bold text-muted uppercase">Status</label>
+                            <select class="form-select" name="status" [(ngModel)]="selectedStudent.status">
+                                <option value="ACTIVE">Active</option>
+                                <option value="ON LEAVE">On Leave</option>
+                                <option value="WITHDRAWN">Withdrawn</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary px-4" (click)="saveChanges()" data-bs-dismiss="modal">
+                    Save Changes
+                </button>
+            </div>
+        </div>
+    </div>
 </div>

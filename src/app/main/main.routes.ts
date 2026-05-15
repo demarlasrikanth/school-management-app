@@ -11,7 +11,7 @@ export const main: Routes = [
     children: [
       { path: '', component: DashboardComponent },
       { path: 'fee-management', component: FeeManagementComponent },
-      { path: 'student-management', component: StudentManagementComponent },
+      { path: 'students', component: StudentManagementComponent },
     ],
   },
 ];

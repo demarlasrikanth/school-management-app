@@ -1,0 +1,51 @@
+/* 1. DEFINE THE THEME VARIABLES */
+:root {
+    --midnight-start: #0f2027;
+    --midnight-mid: #203a43;
+    --midnight-end: #2c5364;
+    --midnight-gradient: linear-gradient(180deg, var(--midnight-start) 0%, var(--midnight-mid) 50%, var(--midnight-end) 100%);
+}
+
+/* 2. OVERRIDE BOOTSTRAP PRIMARY COMPONENTS */
+
+/* Buttons */
+.btn-primary {
+    background: var(--midnight-gradient) !important;
+    border: none !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+    filter: brightness(1.2);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+/* Backgrounds */
+.bg-primary {
+    background: var(--midnight-gradient) !important;
+}
+
+/* Navbars & Cards */
+.navbar-primary, .card-primary {
+    background: var(--midnight-gradient);
+    color: white;
+}
+
+/* Badges & Progress Bars */
+.badge-primary, .progress-bar {
+    background: var(--midnight-gradient) !important;
+}
+
+/* List Groups & Dropdowns active state */
+.list-group-item.active, .dropdown-item:active {
+    background: var(--midnight-gradient) !important;
+    border-color: var(--midnight-mid) !important;
+}
+
+/* 3. SECONDARY LEVEL (Complementary Solid) */
+.btn-secondary {
+    background-color: var(--midnight-end) !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+}
